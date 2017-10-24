@@ -1,0 +1,11 @@
+---
+title: "P8105_hw4_yn2295"
+author: "Yanelli Nunez"
+date: "10/24/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
