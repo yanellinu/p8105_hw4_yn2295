@@ -9,3 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r loading packages}
+library(tidyverse)
+library(janitor)
+```
+The code below cleans the pups dataset and converts it from wide to long format.
+
+```{r clean_pups}
+pups_data = read_csv("./FAS_pups.csv") %>%
+  clean_names() %>%
+  gather(key = developmental_landmark, value = day, pd_ears:pd_walk) 
+```
