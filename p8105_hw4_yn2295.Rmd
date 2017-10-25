@@ -1,8 +1,11 @@
 ---
 title: "P8105_hw4_yn2295"
-author: "Yanelli Nunez"
+author: "Yanelli Nunez & Lizzy Gibson"
 date: "10/24/2017"
-output: html_document
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +15,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r loading packages}
 library(tidyverse)
 library(janitor)
+library(ggridges)
 ```
+
+## Read and Clean Pups Data
+
 The code below cleans the pups dataset and converts it from wide to long format.
 
 ```{r clean_pups}
@@ -20,3 +27,23 @@ pups_data = read_csv("./FAS_pups.csv") %>%
   clean_names() %>%
   gather(key = developmental_landmark, value = day, pd_ears:pd_walk) 
 ```
+
+## Pups Data Visualization
+
+This plot shows the distribution of post-natal days for each developmental landmark.
+
+```{r pups_plot}
+pups_data %>% 
+  mutate(developmental_landmark = forcats::fct_recode(developmental_landmark,
+                                                      "Ears" = "pd_ears",
+                                                      "Eyes" = "pd_eyes",
+                                                      "Pivot" = "pd_pivot",
+                                                      "Walk" = "pd_walk")) %>% 
+  ggplot(aes(x = day)) + 
+  geom_histogram(color = "black", fill = "black", bins = 25) +
+  facet_grid(developmental_landmark ~ .) +
+  labs(x = "Post-natal days", y = "Counts", title = "Post-natal days for developmental landmarks") +
+  theme_bw()
+```
+
+These histograms show that the ears are the first thing to develop in the pups after birth, followed by the ability to pivot and to walk (which overlap quite a bit), and the eyes are usually the last thing to develop.
